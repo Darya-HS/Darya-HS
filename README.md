@@ -2,6 +2,6 @@ Hello! I'm **Darya Paramonava** :blush:, a full-time Data Engineer currently stu
 
 ## Contact
 
-- [LinkedIn](linkedin.com/in/daryaparamonava)
+- [LinkedIn](www.linkedin.com/in/daryaparamonava)
 - [Email](mailto:darya.paramonova.95@gmail.com)
 
