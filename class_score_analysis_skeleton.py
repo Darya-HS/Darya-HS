@@ -1,5 +1,4 @@
 def read_data(filename):
-    # TODO) Read `filename` as a list of integer numbers
     data = []
     with open(filename, 'r') as file:
         lines = file.readlines()
@@ -12,7 +11,6 @@ def read_data(filename):
     return data
 
 def calc_weighted_average(data_2d, weight):
-    # TODO) Calculate the weighted averages of each row of `data_2d`
     average = []
     for row in data_2d:
         m_score, f_score = row
@@ -21,8 +19,6 @@ def calc_weighted_average(data_2d, weight):
     return average
 
 def analyze_data(data_1d):
-    # TODO) Derive summary of the given `data_1d`
-    # Note) Please don't use NumPy and other libraries. Do it yourself.
     mean = sum(data_1d) / len(data_1d)
     var = sum([(x - mean) ** 2 for x in data_1d]) / len(data_1d)
     sorted_data = sorted(data_1d)
