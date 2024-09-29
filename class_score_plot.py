@@ -13,11 +13,11 @@ if __name__ == '__main__':
     class_kr = read_data('data/class_score_kr.csv')
     class_en = read_data('data/class_score_en.csv')
 
-    # TODO) Prepare midterm, final, and total scores
     midterm_kr, final_kr = zip(*class_kr)
     total_kr = [40/125*midterm + 60/100*final for (midterm, final) in class_kr]
     midterm_en, final_en = zip(*class_en)
     total_en = [40/125*midterm + 60/100*final for (midterm, final) in class_en]
+    
     plt.figure(figsize=(8, 6))
     xs_kr = [midterm for midterm in midterm_kr]
     ys_kr = [final for final in final_kr]
@@ -33,10 +33,7 @@ if __name__ == '__main__':
     plt.grid()
     plt.savefig('class_score_scatter.png', format='png', dpi=300)
     plt.show()
-    # TODO) Plot midterm/final scores as points
-
-    # TODO) Plot total scores as a histogram
-    
+  
     plt.figure(figsize=(8, 6))
     bins = [i for i in range(0, 101, 5)]
     plt.xticks(range(0, 101, 20))
