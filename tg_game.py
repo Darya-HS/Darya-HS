@@ -35,9 +35,9 @@ class Unit:
         return
 
     def toBlockAttack(self, dam):
-        self.health = round(self.health - (dam - self.maxBlock), 1)
+        self.health = max(0.3, round(self.health - (dam - self.maxBlock), 1))
         self.setAction("block")
-        self.maxBlock -= 0.1
+        self.maxBlock = max(0, self.maxBlock - 0.1)
         self.outDam = 0
 
     def toHeel(self):
@@ -59,6 +59,7 @@ class Unit:
     def isAlive(self):
         if self.health > 0.3:
             return True
+        
         self.setAction("die")
         self.outDam = 0
         return False
@@ -328,7 +329,7 @@ async def handle_action(update: Update, context: CallbackContext) -> None:
         player.Control("1", bot)
         if not bot.isAlive():
             state["game_over"] = True
-            await query.edit_message_text("Bot dies! You win!")
+            await query.edit_message_text("You win!")
             return
     elif action == "block":
         player.Control("2", bot)
