@@ -71,7 +71,25 @@ This is the list of all the available command in the bot with their detailed des
 
 ## File Structure
 
-Darya_HS/ ├── handlers/ # Contains modular handlers for bot features │ ├── general.py # General commands like /start, /help, /cancel │ ├── profile.py # Profile management handlers │ ├── goals.py # Goal-related handlers │ ├── flashcards.py # Flashcard management handlers │ ├── reminder.py # Reminder-related handlers │ ├── pomodoro.py # Pomodoro session handlers │ └── site.py # Website-related handlers │ ├── utils/ # Utility files │ ├── data.py # JSON-based data management │ └── keyboards.py # Keyboard utilities for inline/reply buttons │ ├── profiles.json # JSON file to store user data (not present by default, created after first run) ├── main.py # Entry point for the bot ├── README.md # Project documentation └── states.py # Manages states as a single source of truth for all handlers
+Darya_HS/
+\n
+├── handlers/                   # Contains modular handlers for bot features\n
+│   ├── general.py              # General commands like /start, /help, /cancel\n
+│   ├── profile.py              # Profile management handlers
+│   ├── goals.py                # Goal-related handlers
+│   ├── flashcards.py           # Flashcard management handlers
+│   ├── reminder.py             # Reminder-related handlers
+│   ├── pomodoro.py             # Pomodoro session handlers
+│   └── site.py                 # Website-related handlers
+│
+├── utils/                      # Utility files
+│   ├── data.py                 # JSON-based data management
+│   └── keyboards.py            # Keyboard utilities for inline/reply buttons
+│
+├── profiles.json               # JSON file to store user data (is not present by default, will appear after the first run)
+├── main.py                     # Entry point for the bot
+├── README.md                   # Project documentation
+└── states.py                   # Storying of states as a single point of truth for all handlers
 
 ---
 
