@@ -70,7 +70,7 @@ This is the list of all the available command in the bot with their detailed des
 ---
 
 ## File Structure
-
+<pre>
 Darya_HS/
 
 ─ handlers/                    Contains modular handlers for bot features
@@ -90,7 +90,7 @@ Darya_HS/
 ─ main.py                      Entry point for the bot
 ─ README.md                    Project documentation
 ─ states.py                    Storing of states as a single point of truth for all handlers
-
+</pre>
 ---
 
 ## Features
