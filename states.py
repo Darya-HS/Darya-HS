@@ -1,3 +1,5 @@
+# This file is part of Study Planner Bot.
+# Licensed under the MIT License. See LICENSE file in the project root for full license information.
 
 USERNAME, PREFERENCES, GOALS, SELECT_FIELD, UPDATE_FIELD = range(5)
 REMINDER_TIME, LOG_TIME_SELECTION, LOG_TIME_HOURS, SET_SITE_URL = range(5, 9)

@@ -1,5 +1,7 @@
+# This file is part of Study Planner Bot.
+# Licensed under the MIT License. See LICENSE file in the project root for full license information.
+
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
-from utils.data import load_profiles, user_profiles
 from handlers.profile import registration_handler, update_profile_handler, timezone_handler, view_profile
 from handlers.reminder import reminder_handler, cancel_reminder
 from handlers.goals import set_goal_handler, log_time_handler, view_progress

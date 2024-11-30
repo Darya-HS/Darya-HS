@@ -9,7 +9,7 @@
 - [File Structure](#file-structure)
 - [Technologies Used](#technologies-used)
 - [Functionality Demo](#functionality-demo)
-
+- [License](#license)
 ---
 
 ## Features
@@ -91,16 +91,23 @@ Darya_HS/
 ├── profiles.json               # JSON file to store user data (is not present by default, will appear after the first run)
 ├── main.py                     # Entry point for the bot
 ├── README.md                   # Project documentation
-└── states.py                   # Storying of states as a single point of truth for all handlers
+├── states.py                   # Storying of states as a single point of truth for all handlers
+└── LICENSE                     # MIT license applicable to the entire project
 </pre>
 ---
 
-## Features
+## Technologies Used
 - **Python**: Core programming language for development
 - **Python-Telegram-Bot**: Library for creating Telegram bots
 - **JSON**: Storage for user data to avoid reregistering in case of bot failure
 - **Pytz**: Timezone management for reminders
+- **Chat GBT**: AI service for some logic adjustments
 ---
 
 ## Functionality Demo
 To fully appreciate the entire functionality of this bot, please refer to this demo: [Watch the Demo on YouTube](https://www.youtube.com/watch?v=FspGg4Prv9M&ab_channel=DaryaParamonova)
+
+---
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE.txt) file for details.
