@@ -7,7 +7,6 @@ from handlers.general import cancel_action
 from states import SET_GOAL_SUBJECT, SET_GOAL_NAME, SET_GOAL_HOURS, UPDATE_GOAL_SELECTION, UPDATE_GOAL_ACTION, EDIT_GOAL_HOURS, LOG_TIME_SELECTION, LOG_TIME_HOURS
 
 async def start_set_goal(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Start the set_goal conversation"""
     user_id = str(update.message.from_user.id)
     if user_id not in user_profiles:
         await update.message.reply_text("You don't have a profile yet. Use /register to create one")
@@ -17,19 +16,16 @@ async def start_set_goal(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     return SET_GOAL_SUBJECT
 
 async def set_goal_subject(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Store the subject and ask for the goal name"""
     context.user_data["subject"] = update.message.text
     await update.message.reply_text("What is the goal name? (e.g., midterm, project)")
     return SET_GOAL_NAME
 
 async def set_goal_name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Store the goal name and ask for the target hours."""
     context.user_data["goal_name"] = update.message.text
     await update.message.reply_text("How many target hours do you want to allocate to this goal?")
     return SET_GOAL_HOURS
 
 async def set_goal_hours(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Store the target hours and save the goal."""
     user_id = str(update.message.from_user.id)
     subject = context.user_data["subject"]
     goal_name = context.user_data["goal_name"]
@@ -57,11 +53,10 @@ async def set_goal_hours(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 async def collect_goals(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_id = str(update.message.from_user.id)
 
-    # Initialize the profile
     user_profiles[user_id] = {
         "username": context.user_data["username"],
-        "goals": [],  # No goals initially
-        "timezone": "UTC",  # Default timezone
+        "goals": [],
+        "timezone": "UTC",
     }
 
     save_profiles()
@@ -75,22 +70,18 @@ async def collect_goals(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 async def update_goal_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_id = str(update.message.from_user.id)
     try:
-        # Parse the user's choice (goal index)
-        goal_index = int(update.message.text.strip()) - 1  # Convert 1-based to 0-based index
+        goal_index = int(update.message.text.strip()) - 1
     except ValueError:
         await update.message.reply_text("Invalid input. Please reply with the number of the goal")
         return UPDATE_GOAL_SELECTION
 
-    # Retrieve goals
     goals = user_profiles[user_id].get("goals", [])
     if not (0 <= goal_index < len(goals)):
         await update.message.reply_text("Invalid choice. Please select a valid goal number")
         return UPDATE_GOAL_SELECTION
 
-    # Store the selected goal index in the conversation context
     context.user_data["goal_index"] = goal_index
 
-    # Ask the user what action they want to take
     await update.message.reply_text("Reply with 'edit' to modify this goal or 'delete' to remove it")
     return UPDATE_GOAL_ACTION
 
@@ -122,7 +113,6 @@ async def edit_goal_hours(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         await update.message.reply_text("Invalid input. Please enter a valid number for target hours")
         return EDIT_GOAL_HOURS
 
-    # Update the goal
     goals = user_profiles[user_id]["goals"]
     goals[goal_index]["target_hours"] = new_target_hours
     save_profiles()
@@ -179,12 +169,10 @@ async def log_time_hours(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await update.message.reply_text("Please enter a valid positive number for hours")
         return LOG_TIME_HOURS
 
-    # Update the logged hours
     goal = user_profiles[user_id]["goals"][goal_index]
     goal["logged_hours"] += logged_hours
     save_profiles()
 
-    # Calculate progress
     progress = floor((goal["logged_hours"] / goal["target_hours"]) * 100)
     progress = min(progress, 100)  # Cap progress at 100%
 

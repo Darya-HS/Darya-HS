@@ -2,14 +2,10 @@
 import json
 import os
 
-# Define the file path for profiles.json
 PROFILES = "profiles.json"
-
-# Global user profiles dictionary
 user_profiles = {}
 
 def save_profiles():
-    """Save user profiles to a JSON file"""
     global user_profiles
     try:
         with open(PROFILES, "w") as file:
@@ -18,7 +14,6 @@ def save_profiles():
         print(f"Error saving profiles: {e}")
 
 def load_profiles():
-    """Load user profiles from a JSON file"""
     global user_profiles
     try:
         if os.path.exists(PROFILES):

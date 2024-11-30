@@ -7,18 +7,15 @@ from utils.data import user_profiles, save_profiles
 from handlers.general import cancel_action
 from handlers.goals import update_goal_action, edit_goal_hours, update_goal_selection, collect_goals
 
-# Handlers for conversation
 async def start_registration(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_id = str(update.message.from_user.id)
     
-    # Check if the user already has a profile
     if user_id in user_profiles:
         await update.message.reply_text(
             "You already have a profile. Use /view_profile to check it or /update_profile to modify it"
         )
         return ConversationHandler.END
 
-    # Proceed with registration if no profile exists
     await update.message.reply_text("Welcome! Let's set up your profile. What is your name?")
     return USERNAME
 
@@ -26,10 +23,9 @@ async def collect_username(update: Update, context: ContextTypes.DEFAULT_TYPE) -
     user_id = str(update.message.from_user.id)
     username = update.message.text.strip()
 
-    # Initialize the user profile with username, goals, and a default timezone
     user_profiles[user_id] = {
         "username": username,
-        "timezone": "UTC",  # Default to UTC if not set during registration
+        "timezone": "UTC",
         "goals": [],
     }
     save_profiles()
@@ -95,7 +91,6 @@ async def update_timezone(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     timezone_input = update.message.text.strip()
 
     try:
-        # Validate timezone
         pytz.timezone(timezone_input)
         user_profiles[user_id]["timezone"] = timezone_input
         save_profiles()
@@ -116,12 +111,10 @@ async def handle_timezone(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     timezone_input = update.message.text.strip()
 
     try:
-        # Validate the timezone
         user_timezone = pytz.timezone(timezone_input)
 
-        # Save the timezone to the user's profile
         if user_id not in user_profiles:
-            user_profiles[user_id] = {}  # Ensure profile exists
+            user_profiles[user_id] = {}
         user_profiles[user_id]["timezone"] = timezone_input
         save_profiles()
 
@@ -141,13 +134,11 @@ async def view_profile(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         await update.message.reply_text("You don't have a profile yet. Use /register to create one")
         return
 
-    # Format the profile details
     username = profile.get("username", "Not set")
     timezone = profile.get("timezone", "UTC")
     goals = profile.get("goals", [])
     website = profile.get("website", "Not set")
 
-    # Display goals
     if goals:
         goals_text = "\n".join(
             [
@@ -158,7 +149,6 @@ async def view_profile(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     else:
         goals_text = "No goals set yet"
 
-    # Construct the message
     message = (
         f"👤 **Profile Details**:\n"
         f"- Username: {username}\n"
@@ -168,7 +158,6 @@ async def view_profile(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     )
     await update.message.reply_text(message, parse_mode="Markdown")
     
-# Conversation handler for registration
 registration_handler = ConversationHandler(
     entry_points=[CommandHandler("register", start_registration)],
     states={

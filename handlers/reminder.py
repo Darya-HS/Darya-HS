@@ -7,7 +7,6 @@ from utils.data import user_profiles, save_profiles
 from states import REMINDER_TIME
 from handlers.general import cancel_action
 
-
 async def set_reminder(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_id = str(update.message.from_user.id)
     if user_id not in user_profiles:
@@ -17,23 +16,17 @@ async def set_reminder(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     await update.message.reply_text("What time should I remind you to study? (e.g., 09:00 or 18:30)")
     return REMINDER_TIME
 
-# Handle reminder time
 async def handle_reminder_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_id = str(update.message.from_user.id)
     reminder_time = update.message.text.strip()
 
-    # Retrieve the user's timezone
     user_timezone = user_profiles.get(user_id, {}).get("timezone", "UTC")
 
     try:
-        # Parse the time input
         hour, minute = map(int, reminder_time.split(":"))
-
-        # Convert to a timezone-aware time object
         timezone_obj = pytz.timezone(user_timezone)
         reminder_time_obj = time(hour, minute, tzinfo=timezone_obj)
 
-        # Schedule the reminder
         context.job_queue.run_daily(
             send_reminder,
             time=reminder_time_obj,
@@ -41,11 +34,9 @@ async def handle_reminder_time(update: Update, context: ContextTypes.DEFAULT_TYP
             name=f"reminder_{user_id}",
         )
 
-        # Save the reminder time in the user's profile
         user_profiles[user_id]["reminder_time"] = reminder_time
         save_profiles()
 
-        # Confirmation message
         await update.message.reply_text(
             f"Your daily reminder has been set for {reminder_time} in your timezone ({user_timezone}) 🎉"
         )
@@ -54,10 +45,8 @@ async def handle_reminder_time(update: Update, context: ContextTypes.DEFAULT_TYP
         await update.message.reply_text(
             "Invalid time format. Please try again with the HH:MM format (24-hour)"
         )
-        # Allow the user to retry
         return REMINDER_TIME
 
-# Send reminder
 async def send_reminder(context: ContextTypes.DEFAULT_TYPE) -> None:
     try:
         job_data = context.job.data

@@ -6,18 +6,15 @@ from states import ADD_QUESTION, ADD_ANSWER, PRACTICE_FLASHCARD, DELETE_FLASHCAR
 from handlers.general import cancel_action
 
 async def start_add_flashcard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Start the process to add a new flashcard"""
     await update.message.reply_text("Enter the question for the flashcard:")
     return ADD_QUESTION
 
 async def add_flashcard_question(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Store the flashcard question and ask for the answer"""
     context.user_data["flashcard_question"] = update.message.text
     await update.message.reply_text("Enter the answer for the flashcard:")
     return ADD_ANSWER
 
 async def add_flashcard_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Store the flashcard answer and save it"""
     user_id = str(update.message.from_user.id)
     question = context.user_data["flashcard_question"]
     answer = update.message.text
@@ -30,7 +27,6 @@ async def add_flashcard_answer(update: Update, context: ContextTypes.DEFAULT_TYP
     return ConversationHandler.END
 
 async def view_flashcards(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Show the list of flashcards."""
     user_id = str(update.message.from_user.id)
     flashcards = user_profiles[user_id].get("flashcards", [])
 
@@ -42,7 +38,6 @@ async def view_flashcards(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     await update.message.reply_text(f"Your flashcards:\n{flashcards_text}")
 
 async def start_practice_flashcards(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Start practicing flashcards."""
     user_id = str(update.message.from_user.id)
     flashcards = user_profiles[user_id].get("flashcards", [])
 
@@ -51,12 +46,10 @@ async def start_practice_flashcards(update: Update, context: ContextTypes.DEFAUL
         return ConversationHandler.END
 
     context.user_data["flashcard_index"] = 0
-    # Explicitly call the next step
     await ask_flashcard_question(update, context)
     return PRACTICE_FLASHCARD
 
 async def ask_flashcard_question(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Present a flashcard question to the user."""
     user_id = str(update.message.from_user.id)
     flashcards = user_profiles[user_id]["flashcards"]
     index = context.user_data["flashcard_index"]
@@ -66,12 +59,10 @@ async def ask_flashcard_question(update: Update, context: ContextTypes.DEFAULT_T
     return PRACTICE_FLASHCARD
 
 async def check_flashcard_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Check the user's answer and move to the next flashcard or finish"""
     user_id = str(update.message.from_user.id)
     flashcards = user_profiles[user_id]["flashcards"]
     index = context.user_data["flashcard_index"]
 
-    # Retrieve the correct answer
     correct_answer = flashcards[index]["answer"]
     user_answer = update.message.text.strip()
 
@@ -80,19 +71,15 @@ async def check_flashcard_answer(update: Update, context: ContextTypes.DEFAULT_T
     else:
         await update.message.reply_text(f"Wrong. The correct answer is: {correct_answer}")
 
-    # Move to the next flashcard
     context.user_data["flashcard_index"] += 1
     if context.user_data["flashcard_index"] < len(flashcards):
-        # Call the next question explicitly
         await ask_flashcard_question(update, context)
         return PRACTICE_FLASHCARD
     else:
-        # End the practice session
         await update.message.reply_text("You've completed all your flashcards! 🎓")
         return ConversationHandler.END
     
 async def start_delete_flashcard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Start the process to delete a flashcard"""
     user_id = str(update.message.from_user.id)
     flashcards = user_profiles[user_id].get("flashcards", [])
 
@@ -105,7 +92,6 @@ async def start_delete_flashcard(update: Update, context: ContextTypes.DEFAULT_T
     return DELETE_FLASHCARD
 
 async def delete_flashcard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Delete the selected flashcard"""
     user_id = str(update.message.from_user.id)
     flashcards = user_profiles[user_id]["flashcards"]
 
