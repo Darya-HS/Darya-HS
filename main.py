@@ -8,7 +8,7 @@ from handlers.flashcards import flashcard_handler, practice_flashcard_handler, d
 from handlers.general import start, help_button
 from handlers.pomodoro import start_pomodoro, cancel_pomodoro
 
-TOKEN = 0
+TOKEN = '7617504836:AAEFa_Q8oHcXyuAeljZlV7L5fOdC1pxKs04'
 # Create the application
 application = Application.builder().token(TOKEN).build()
 application.job_queue

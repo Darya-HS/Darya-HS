@@ -8,6 +8,7 @@
 - [Commands](#commands)
 - [File Structure](#file-structure)
 - [Technologies Used](#technologies-used)
+- [Functionality Demo](#functionality-demo)
 
 ---
 
@@ -48,6 +49,7 @@ This is the list of all the available command in the bot with their detailed des
 |-----------------------|-----------------------------------------------------------------------------|
 | **/start**            | Start the bot and see the welcome message                                 |
 | **/register**         | Register a new user profile                                               |
+| **/set_timezone**     | Specify your current timezone                                             |
 | **/view_profile**     | View your current profile                                                 |
 | **/update_profile**   | Update your username, timezone, or goals                                  |
 | **/set_goal**         | Create a new study goal                                                   |
@@ -98,3 +100,7 @@ Darya_HS/
 - **Python-Telegram-Bot**: Library for creating Telegram bots
 - **JSON**: Storage for user data to avoid reregistering in case of bot failure
 - **Pytz**: Timezone management for reminders
+---
+
+## Functionality Demo
+To fully appreciate the entire functionality of this bot, please refer to this demo: [Watch the Demo on YouTube](https://www.youtube.com/watch?v=FspGg4Prv9M&ab_channel=DaryaParamonova)

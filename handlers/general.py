@@ -8,12 +8,13 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "Here are the things I can help you with:\n\n"
         "📝 **Profile Management**\n"
         "/register - Create your study profile\n"
+        "/set_timezone - Specify your current timezone\n"
         "/view_profile - View your current study profile\n"
         "/update_profile - Update your profile details\n\n"
         "⏰ **Time Management**\n"
         "/set_reminder - Set a daily study reminder\n"
         "/cancel_reminder - Cancel your daily reminder\n"
-        "/pomodoro - Start a Pomodoro session\n"
+        "/pomodoro - Start a Pomodoro session (use /pomodoro <study> <break> <cycles> to customize your session)\n"
         "/cancel_pomodoro - Cancel your current Pomodoro session\n\n"
         "🎯 **Goals and Progress**\n"
         "/set_goal - Set a new study goal\n"
@@ -38,12 +39,13 @@ async def help_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         "Here are the commands you can use:\n\n"
         "📝 **Profile Management**\n"
         "/register - Create your study profile\n"
+        "/set_timezone - Specify your current timezone\n"
         "/view_profile - View your current study profile\n"
         "/update_profile - Update your profile details\n\n"
         "⏰ **Time Management**\n"
         "/set_reminder - Set a daily study reminder\n"
         "/cancel_reminder - Cancel your daily reminder\n"
-        "/pomodoro - Start a Pomodoro session\n"
+        "/pomodoro - Start a Pomodoro session (use /pomodoro <study> <break> <cycles> to customize your session)\n"
         "/cancel_pomodoro - Cancel your current Pomodoro session\n\n"
         "🎯 **Goals and Progress**\n"
         "/set_goal - Set a new study goal\n"
@@ -64,5 +66,5 @@ async def help_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     await update.message.reply_text(message, reply_markup=keyboards.get_main_keyboard())
 
 async def cancel_action(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    await update.message.reply_text("Action canceled.")
+    await update.message.reply_text("Action canceled")
     return ConversationHandler.END

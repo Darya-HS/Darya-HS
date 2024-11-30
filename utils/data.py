@@ -9,7 +9,7 @@ PROFILES = "profiles.json"
 user_profiles = {}
 
 def save_profiles():
-    """Save user profiles to a JSON file."""
+    """Save user profiles to a JSON file"""
     global user_profiles
     try:
         with open(PROFILES, "w") as file:
@@ -18,14 +18,14 @@ def save_profiles():
         print(f"Error saving profiles: {e}")
 
 def load_profiles():
-    """Load user profiles from a JSON file."""
+    """Load user profiles from a JSON file"""
     global user_profiles
     try:
         if os.path.exists(PROFILES):
             with open(PROFILES, "r") as file:
                 user_profiles = json.load(file)
         else:
-            print("Profiles file not found. Starting fresh.")
+            print("Profiles file not found. Starting fresh")
     except Exception as e:
         print(f"Error loading profiles: {e}")
 

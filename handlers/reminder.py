@@ -11,7 +11,7 @@ from handlers.general import cancel_action
 async def set_reminder(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_id = str(update.message.from_user.id)
     if user_id not in user_profiles:
-        await update.message.reply_text("You don't have a profile yet. Use /register to create one.")
+        await update.message.reply_text("You don't have a profile yet. Use /register to create one")
         return ConversationHandler.END
 
     await update.message.reply_text("What time should I remind you to study? (e.g., 09:00 or 18:30)")
@@ -47,12 +47,12 @@ async def handle_reminder_time(update: Update, context: ContextTypes.DEFAULT_TYP
 
         # Confirmation message
         await update.message.reply_text(
-            f"Your daily reminder has been set for {reminder_time} in your timezone ({user_timezone}). 🎉"
+            f"Your daily reminder has been set for {reminder_time} in your timezone ({user_timezone}) 🎉"
         )
         return ConversationHandler.END
     except (ValueError, IndexError) as e:
         await update.message.reply_text(
-            "Invalid time format. Please try again with the HH:MM format (24-hour)."
+            "Invalid time format. Please try again with the HH:MM format (24-hour)"
         )
         # Allow the user to retry
         return REMINDER_TIME
@@ -79,7 +79,7 @@ async def cancel_reminder(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         user_profiles[user_id].pop("reminder_time", None)
         save_profiles()
 
-    await update.message.reply_text("Your daily reminder has been canceled.")
+    await update.message.reply_text("Your daily reminder has been canceled")
     
 reminder_handler = ConversationHandler(
     entry_points=[CommandHandler("set_reminder", set_reminder)],

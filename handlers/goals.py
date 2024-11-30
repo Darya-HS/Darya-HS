@@ -7,17 +7,17 @@ from handlers.general import cancel_action
 from states import SET_GOAL_SUBJECT, SET_GOAL_NAME, SET_GOAL_HOURS, UPDATE_GOAL_SELECTION, UPDATE_GOAL_ACTION, EDIT_GOAL_HOURS, LOG_TIME_SELECTION, LOG_TIME_HOURS
 
 async def start_set_goal(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Start the set_goal conversation."""
+    """Start the set_goal conversation"""
     user_id = str(update.message.from_user.id)
     if user_id not in user_profiles:
-        await update.message.reply_text("You don't have a profile yet. Use /register to create one.")
+        await update.message.reply_text("You don't have a profile yet. Use /register to create one")
         return ConversationHandler.END
 
     await update.message.reply_text("What is the subject of the goal?")
     return SET_GOAL_SUBJECT
 
 async def set_goal_subject(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Store the subject and ask for the goal name."""
+    """Store the subject and ask for the goal name"""
     context.user_data["subject"] = update.message.text
     await update.message.reply_text("What is the goal name? (e.g., midterm, project)")
     return SET_GOAL_NAME
@@ -37,7 +37,7 @@ async def set_goal_hours(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     try:
         target_hours = float(update.message.text)
     except ValueError:
-        await update.message.reply_text("Target hours must be a number. Please start over with /set_goal.")
+        await update.message.reply_text("Target hours must be a number. Please start over with /set_goal")
         return ConversationHandler.END
 
     goals = user_profiles[user_id].setdefault("goals", [])
@@ -50,7 +50,7 @@ async def set_goal_hours(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     save_profiles()
 
     await update.message.reply_text(
-        f"Goal set: {subject} - {goal_name} ({target_hours} hours target). 🎯"
+        f"Goal set: {subject} - {goal_name} ({target_hours} hours target) 🎯"
     )
     return ConversationHandler.END
 
@@ -68,7 +68,7 @@ async def collect_goals(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 
     await update.message.reply_text(
         f"Profile created! Welcome, {context.user_data['username']} 🎉\n"
-        "You can now set study goals using /set_goal."
+        "You can now set study goals using /set_goal"
     )
     return ConversationHandler.END
 
@@ -78,20 +78,20 @@ async def update_goal_selection(update: Update, context: ContextTypes.DEFAULT_TY
         # Parse the user's choice (goal index)
         goal_index = int(update.message.text.strip()) - 1  # Convert 1-based to 0-based index
     except ValueError:
-        await update.message.reply_text("Invalid input. Please reply with the number of the goal.")
+        await update.message.reply_text("Invalid input. Please reply with the number of the goal")
         return UPDATE_GOAL_SELECTION
 
     # Retrieve goals
     goals = user_profiles[user_id].get("goals", [])
     if not (0 <= goal_index < len(goals)):
-        await update.message.reply_text("Invalid choice. Please select a valid goal number.")
+        await update.message.reply_text("Invalid choice. Please select a valid goal number")
         return UPDATE_GOAL_SELECTION
 
     # Store the selected goal index in the conversation context
     context.user_data["goal_index"] = goal_index
 
     # Ask the user what action they want to take
-    await update.message.reply_text("Reply with 'edit' to modify this goal or 'delete' to remove it.")
+    await update.message.reply_text("Reply with 'edit' to modify this goal or 'delete' to remove it")
     return UPDATE_GOAL_ACTION
 
 async def update_goal_action(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -109,7 +109,7 @@ async def update_goal_action(update: Update, context: ContextTypes.DEFAULT_TYPE)
         await update.message.reply_text(f"Deleted goal: {deleted_goal['subject']} ({deleted_goal['goal_name']}).")
         return ConversationHandler.END
     else:
-        await update.message.reply_text("Invalid action. Reply with 'edit' or 'delete'.")
+        await update.message.reply_text("Invalid action. Reply with 'edit' or 'delete'")
         return UPDATE_GOAL_ACTION
     
 async def edit_goal_hours(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -119,7 +119,7 @@ async def edit_goal_hours(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     try:
         new_target_hours = float(update.message.text.strip())
     except ValueError:
-        await update.message.reply_text("Invalid input. Please enter a valid number for target hours.")
+        await update.message.reply_text("Invalid input. Please enter a valid number for target hours")
         return EDIT_GOAL_HOURS
 
     # Update the goal
@@ -139,7 +139,7 @@ async def start_log_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     goals = user_profiles[user_id].get("goals", [])
 
     if not goals:
-        await update.message.reply_text("You don't have any goals yet. Use /set_goal to add one.")
+        await update.message.reply_text("You don't have any goals yet. Use /set_goal to add one")
         return ConversationHandler.END
 
     goals_text = "\n".join(
@@ -147,7 +147,7 @@ async def start_log_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
          for i, goal in enumerate(goals)]
     )
     await update.message.reply_text(
-        f"Select a goal to log time for:\n{goals_text}\nReply with the goal number."
+        f"Select a goal to log time for:\n{goals_text}\nReply with the goal number"
     )
     return LOG_TIME_SELECTION
 
@@ -160,7 +160,7 @@ async def log_time_selection(update: Update, context: ContextTypes.DEFAULT_TYPE)
         if not (0 <= goal_index < len(goals)):
             raise ValueError
     except ValueError:
-        await update.message.reply_text("Invalid input. Please reply with a valid goal number.")
+        await update.message.reply_text("Invalid input. Please reply with a valid goal number")
         return LOG_TIME_SELECTION
 
     context.user_data["goal_index"] = goal_index
@@ -176,7 +176,7 @@ async def log_time_hours(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         if logged_hours <= 0:
             raise ValueError
     except ValueError:
-        await update.message.reply_text("Please enter a valid positive number for hours.")
+        await update.message.reply_text("Please enter a valid positive number for hours")
         return LOG_TIME_HOURS
 
     # Update the logged hours
@@ -190,7 +190,7 @@ async def log_time_hours(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
     await update.message.reply_text(
         f"Successfully logged {logged_hours} hours for {goal['subject']} ({goal['goal_name']}).\n"
-        f"Progress: {goal['logged_hours']}/{goal['target_hours']} hours ({progress}%)."
+        f"Progress: {goal['logged_hours']}/{goal['target_hours']} hours ({progress}%)"
     )
     return ConversationHandler.END
 

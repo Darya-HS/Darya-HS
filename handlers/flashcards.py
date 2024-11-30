@@ -6,18 +6,18 @@ from states import ADD_QUESTION, ADD_ANSWER, PRACTICE_FLASHCARD, DELETE_FLASHCAR
 from handlers.general import cancel_action
 
 async def start_add_flashcard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Start the process to add a new flashcard."""
+    """Start the process to add a new flashcard"""
     await update.message.reply_text("Enter the question for the flashcard:")
     return ADD_QUESTION
 
 async def add_flashcard_question(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Store the flashcard question and ask for the answer."""
+    """Store the flashcard question and ask for the answer"""
     context.user_data["flashcard_question"] = update.message.text
     await update.message.reply_text("Enter the answer for the flashcard:")
     return ADD_ANSWER
 
 async def add_flashcard_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Store the flashcard answer and save it."""
+    """Store the flashcard answer and save it"""
     user_id = str(update.message.from_user.id)
     question = context.user_data["flashcard_question"]
     answer = update.message.text
@@ -35,7 +35,7 @@ async def view_flashcards(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     flashcards = user_profiles[user_id].get("flashcards", [])
 
     if not flashcards:
-        await update.message.reply_text("No flashcards found. Use /add_flashcard to add one.")
+        await update.message.reply_text("No flashcards found. Use /add_flashcard to add one")
         return
 
     flashcards_text = "\n".join([f"{i + 1}. {fc['question']}" for i, fc in enumerate(flashcards)])
@@ -47,7 +47,7 @@ async def start_practice_flashcards(update: Update, context: ContextTypes.DEFAUL
     flashcards = user_profiles[user_id].get("flashcards", [])
 
     if not flashcards:
-        await update.message.reply_text("No flashcards found. Use /add_flashcard to add one.")
+        await update.message.reply_text("No flashcards found. Use /add_flashcard to add one")
         return ConversationHandler.END
 
     context.user_data["flashcard_index"] = 0
@@ -66,7 +66,7 @@ async def ask_flashcard_question(update: Update, context: ContextTypes.DEFAULT_T
     return PRACTICE_FLASHCARD
 
 async def check_flashcard_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Check the user's answer and move to the next flashcard or finish."""
+    """Check the user's answer and move to the next flashcard or finish"""
     user_id = str(update.message.from_user.id)
     flashcards = user_profiles[user_id]["flashcards"]
     index = context.user_data["flashcard_index"]
@@ -92,12 +92,12 @@ async def check_flashcard_answer(update: Update, context: ContextTypes.DEFAULT_T
         return ConversationHandler.END
     
 async def start_delete_flashcard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Start the process to delete a flashcard."""
+    """Start the process to delete a flashcard"""
     user_id = str(update.message.from_user.id)
     flashcards = user_profiles[user_id].get("flashcards", [])
 
     if not flashcards:
-        await update.message.reply_text("No flashcards found. Use /add_flashcard to add one.")
+        await update.message.reply_text("No flashcards found. Use /add_flashcard to add one")
         return ConversationHandler.END
 
     flashcards_text = "\n".join([f"{i + 1}. {fc['question']}" for i, fc in enumerate(flashcards)])
@@ -105,7 +105,7 @@ async def start_delete_flashcard(update: Update, context: ContextTypes.DEFAULT_T
     return DELETE_FLASHCARD
 
 async def delete_flashcard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Delete the selected flashcard."""
+    """Delete the selected flashcard"""
     user_id = str(update.message.from_user.id)
     flashcards = user_profiles[user_id]["flashcards"]
 
@@ -114,7 +114,7 @@ async def delete_flashcard(update: Update, context: ContextTypes.DEFAULT_TYPE) -
         if not (0 <= index < len(flashcards)):
             raise ValueError
     except ValueError:
-        await update.message.reply_text("Invalid input. Please select a valid flashcard number.")
+        await update.message.reply_text("Invalid input. Please select a valid flashcard number")
         return DELETE_FLASHCARD
 
     deleted = flashcards.pop(index)

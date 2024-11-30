@@ -14,7 +14,7 @@ async def start_registration(update: Update, context: ContextTypes.DEFAULT_TYPE)
     # Check if the user already has a profile
     if user_id in user_profiles:
         await update.message.reply_text(
-            "You already have a profile. Use /view_profile to check it or /update_profile to modify it."
+            "You already have a profile. Use /view_profile to check it or /update_profile to modify it"
         )
         return ConversationHandler.END
 
@@ -37,14 +37,14 @@ async def collect_username(update: Update, context: ContextTypes.DEFAULT_TYPE) -
     await update.message.reply_text(
         "Profile created successfully! 🎉\n"
         "Default timezone is set to UTC. Use /set_timezone to change it if needed.\n"
-        "You can now set study goals for your subjects using /set_goal."
+        "You can now set study goals for your subjects using /set_goal"
     )
     return ConversationHandler.END
 
 async def start_update_profile(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_id = str(update.message.from_user.id)
     if user_id not in user_profiles:
-        await update.message.reply_text("You don't have a profile yet. Use /register to create one.")
+        await update.message.reply_text("You don't have a profile yet. Use /register to create one")
         return ConversationHandler.END
 
     await update.message.reply_text(
@@ -52,7 +52,7 @@ async def start_update_profile(update: Update, context: ContextTypes.DEFAULT_TYP
         "1. Username\n"
         "2. Timezone\n"
         "3. Goals\n\n"
-        "Reply with the option number.",
+        "Reply with the option number",
     )
     return UPDATE_PROFILE
 
@@ -68,18 +68,18 @@ async def update_profile_selection(update: Update, context: ContextTypes.DEFAULT
         user_id = str(update.message.from_user.id)
         goals = user_profiles[user_id].get("goals", [])
         if not goals:
-            await update.message.reply_text("No goals to update. Use /set_goal to add one.")
+            await update.message.reply_text("No goals to update. Use /set_goal to add one")
             return ConversationHandler.END
 
         goals_text = "\n".join(
             [f"{i + 1}. {goal['subject']} ({goal['goal_name']})" for i, goal in enumerate(goals)]
         )
         await update.message.reply_text(
-            f"Select a goal to update or delete:\n{goals_text}\nReply with the goal number."
+            f"Select a goal to update or delete:\n{goals_text}\nReply with the goal number"
         )
         return UPDATE_GOAL_SELECTION
     else:
-        await update.message.reply_text("Invalid choice. Please reply with 1, 2, or 3.")
+        await update.message.reply_text("Invalid choice. Please reply with 1, 2, or 3")
         return UPDATE_PROFILE
 
 async def update_username(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -87,7 +87,7 @@ async def update_username(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     new_username = update.message.text.strip()
     user_profiles[user_id]["username"] = new_username
     save_profiles()
-    await update.message.reply_text(f"Username updated to {new_username}.")
+    await update.message.reply_text(f"Username updated to {new_username}")
     return ConversationHandler.END
 
 async def update_timezone(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -99,10 +99,10 @@ async def update_timezone(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         pytz.timezone(timezone_input)
         user_profiles[user_id]["timezone"] = timezone_input
         save_profiles()
-        await update.message.reply_text(f"Timezone updated to {timezone_input}.")
+        await update.message.reply_text(f"Timezone updated to {timezone_input}")
         return ConversationHandler.END
     except pytz.UnknownTimeZoneError:
-        await update.message.reply_text("Invalid timezone. Please try again.")
+        await update.message.reply_text("Invalid timezone. Please try again")
         return UPDATE_TIMEZONE
     
 async def set_timezone(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -130,7 +130,7 @@ async def handle_timezone(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         )
         return ConversationHandler.END
     except pytz.UnknownTimeZoneError:
-        await update.message.reply_text("Invalid timezone. Please try again.")
+        await update.message.reply_text("Invalid timezone. Please try again")
         return SELECT_FIELD
     
 async def view_profile(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -138,7 +138,7 @@ async def view_profile(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     profile = user_profiles.get(user_id)
 
     if not profile:
-        await update.message.reply_text("You don't have a profile yet. Use /register to create one.")
+        await update.message.reply_text("You don't have a profile yet. Use /register to create one")
         return
 
     # Format the profile details

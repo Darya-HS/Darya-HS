@@ -24,10 +24,10 @@ async def start_pomodoro(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         )
 
         await update.message.reply_text(
-            f"Pomodoro started! Focus for {work_duration} minutes. 🍅 Total cycles: {cycles}."
+            f"Pomodoro started! Focus for {work_duration} minutes. 🍅 Total cycles: {cycles}"
         )
     except ValueError:
-        await update.message.reply_text("Invalid input. Use /pomodoro <work_duration> <break_duration> <cycles>.")
+        await update.message.reply_text("Invalid input. Use /pomodoro <work_duration> <break_duration> <cycles>")
 
 async def work_period(context: ContextTypes.DEFAULT_TYPE) -> None:
     job_data = context.job.data
@@ -36,7 +36,7 @@ async def work_period(context: ContextTypes.DEFAULT_TYPE) -> None:
     remaining_cycles = job_data["remaining_cycles"]
 
     # Notify the user that the work period is over
-    await context.bot.send_message(chat_id=chat_id, text="This cycle is complete! Take your break. ☕")
+    await context.bot.send_message(chat_id=chat_id, text="This cycle is complete! Take your break ☕")
 
     # Schedule the break period
     context.job_queue.run_once(
@@ -59,7 +59,7 @@ async def break_period(context: ContextTypes.DEFAULT_TYPE) -> None:
 
     if remaining_cycles > 0:
         # Notify the user that the break is over
-        await context.bot.send_message(chat_id=chat_id, text="Break time is over! Time to get back to work. 💪")
+        await context.bot.send_message(chat_id=chat_id, text="Break time is over! Time to get back to work 💪")
 
         # Schedule the next work period
         context.job_queue.run_once(
@@ -87,4 +87,4 @@ async def cancel_pomodoro(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         if job.name and job.name.startswith(job_prefix):
             job.schedule_removal()
 
-    await update.message.reply_text("Pomodoro session canceled. You can start again with /pomodoro.")
+    await update.message.reply_text("Pomodoro session canceled. You can start again with /pomodoro or customize it with /pomodoro <work_duration> <break_duration> <cycles>!")
