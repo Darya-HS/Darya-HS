@@ -19,7 +19,7 @@
    - View, update, or delete profile details
 
 2. **Study Goal Management**  
-   - Add goals by specifying subject, name (midterm, project or anything else), and target hours  
+   - Add goals by specifying subject, name (midterm, project, or anything else), and target hours  
    - Update, delete, or log hours for each goal  
    - View progress and completion percentage of goals
 
@@ -28,8 +28,8 @@
    - Cancel reminders when you get tired of them
 
 4. **Pomodoro Timer**  
-   - Start Pomodoro sessions to improve focus. This session is by default 1 cycle of studying (25 minutes) + break (5 minutes), but you can set whatever time periods you like and however many cycles you wish to study. 
-   - Cancel the sessions if you feel overwhelmed
+   - Start Pomodoro sessions to improve focus. This session is by default 1 cycle of studying (25 minutes) + break (5 minutes), but you can set whatever time periods you like and however many cycles you wish to study 
+   - Cancel your current session if you feel overwhelmed
 
 5. **Flashcard Management**  
    - Create, view, practice, and delete flashcards (questions + answers)
@@ -66,7 +66,7 @@ This is the list of all the available command in the bot with their detailed des
 | **/site**             | Open the saved website                                                   |
 | **/pomodoro**         | Start a Pomodoro session                                                 |
 | **/cancel_pomodoro**  | Cancel the current Pomodoro session                                       |
-| **/help**             | See the full list of available commands (also available as a button)      |
+| **/help**             | See the full list of all the commands (also available as a button)      |
 | **/cancel**           | Cancel any ongoing action                                                |
 
 ---
@@ -91,8 +91,8 @@ Darya_HS/
 ├── profiles.json               # JSON file to store user data (is not present by default, will appear after the first run)
 ├── main.py                     # Entry point for the bot
 ├── README.md                   # Project documentation
-├── states.py                   # Storying of states as a single point of truth for all handlers
-└── LICENSE                     # MIT license applicable to the entire project
+├── states.py                   # Storage of states as a single point of truth for all handlers
+└── LICENSE.txt                 # MIT license applicable to the entire project
 </pre>
 ---
 
